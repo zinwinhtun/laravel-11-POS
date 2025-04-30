@@ -17,9 +17,6 @@
     <link rel="stylesheet" href="{{ asset('Admin/css/style.css') }}" />
     <!-- endinject -->
     <link rel="shortcut icon" href="{{ asset('Admin/images/favicon.png') }}" />
-    {{-- add bootstrap 5 CSS link  --}}
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 </head>
 
 <body>
@@ -47,9 +44,17 @@
     <!-- End custom js for this page-->
 
     <script src="{{ asset('Admin/js/jquery.cookie.js') }}" type="text/javascript"></script>
-    {{-- bootstrap JS link  --}}
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous">
+    <script>
+        // image upload
+        function loadFile(event){
+            var reader = new FileReader();
+            reader.onload = function(){
+                var image = document.getElementById('image');
+                image.src = reader.result;
+            }
+
+            reader.readAsDataURL(event.target.files[0]);
+        }
     </script>
 </body>
 

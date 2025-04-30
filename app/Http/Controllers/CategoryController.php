@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use PDO;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class CategoryController extends Controller
 {
@@ -33,6 +34,7 @@ class CategoryController extends Controller
         // dd($request->toArray());
         $this->CheckValidate($request);
         Category::create($request->all());
+        Alert::success('Category Create', 'Success Category Creation');
         return back();
     }
 
@@ -57,7 +59,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $this->CheckValidate($request);
+        $this->CheckValidate($request,$id);
         Category::FindOrFail($id)->update($request->all());
         return back();
     }
@@ -68,6 +70,7 @@ class CategoryController extends Controller
     public function destroy(string $id)
     {
         Category::FindOrFail($id)->delete();
+        Alert::error('Delete', 'This Item Was Deleted Successful');
         return back();
     }
 

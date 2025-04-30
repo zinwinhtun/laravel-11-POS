@@ -10,10 +10,13 @@
                         @csrf
                         <div class="form-group">
                             <label for="exampleInputUsername1">Category Name</label>
-                            <input type="text" name="name" class="form-control" id="exampleInputUsername1"
-                                placeholder="Enter Category Name">
+                            <input type="text" name="name"
+                                class="form-control @error('name')
+                                is-invalid
+                            @enderror"
+                                id="exampleInputUsername1" placeholder="Enter Category Name" value="{{ old('name') }}">
                             @error('name')
-                                <small class="text-danger">{{ $message }}</small>
+                                <small class="invalid-feedback">{{ $message }}</small>
                             @enderror
                         </div>
                         <button type="submit" class="btn btn-primary me-2">Create</button>
@@ -72,10 +75,15 @@
                                                                                     Name</h4>
                                                                             </label>
                                                                             <input type="text" name="name"
-                                                                                class="form-control"
+                                                                                class="form-control @error('name')
+                                                                                    is-invalid
+                                                                                @enderror"
                                                                                 id="exampleInputUsername1"
                                                                                 placeholder="Enter Category Name"
-                                                                                value="{{ $category->name }}">
+                                                                                value="{{ old('name', $category->name) }}">
+                                                                            @error('name')
+                                                                                <small>{{ $message }}</small>
+                                                                            @enderror
                                                                         </div>
                                                                     </div>
                                                                     <div class="modal-footer">
@@ -110,3 +118,5 @@
         </div>
     </div>
 @endsection
+
+

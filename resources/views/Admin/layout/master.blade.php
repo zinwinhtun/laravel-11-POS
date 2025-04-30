@@ -159,21 +159,21 @@
             <nav class="sidebar sidebar-offcanvas" id="sidebar">
                 <ul class="nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="index.html">
+                        <a class="nav-link" href="{{route('admin.dashboard')}}">
                             <i class="mdi mdi-home menu-icon"></i>
                             <span class="menu-title">Dashboard</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{route('category.index')}}">
-                            <i class="mdi mdi-home menu-icon"></i>
+                            <i class="mdi mdi-newspaper menu-icon"></i>
                             <span class="menu-title">Category</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="pages/forms/basic_elements.html">
+                        <a class="nav-link" href="{{route('product.index')}}">
                             <i class="mdi mdi-view-headline menu-icon"></i>
-                            <span class="menu-title">Form elements</span>
+                            <span class="menu-title">Product</span>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -244,6 +244,8 @@
                 {{-- content area  --}}
                 <div class="content-wrapper">
                 @yield('admin-ui')
+                {{-- sweet alert  --}}
+                @include('sweetalert::alert')
                 </div>
                 <!-- content-wrapper ends -->
             </div>
