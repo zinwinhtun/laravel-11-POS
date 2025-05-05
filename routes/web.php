@@ -29,3 +29,8 @@ Route::middleware('auth')->group(function () {
 Route::get('/haha',function(){
     return view('auth.custom-login-ui');
 });
+
+
+Route::get('/test',function(){
+    return 'this is test';
+});
