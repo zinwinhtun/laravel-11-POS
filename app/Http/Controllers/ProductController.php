@@ -14,7 +14,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $category = Category::get();
+        $category = Category::all();
         $product = Product::with('category')->when(request('searchData') , function($query){
             $search = request('searchData');
             $query->where('name', 'like', '%' . $search . '%')
@@ -81,27 +81,27 @@ class ProductController extends Controller
         $request->merge(['id' => $id]); // merge id to id
         $this->validationCheck($request,'update');
         $data = $this->data($request);
-
-        //image store
-        if($request->hasFile('image')){
-            //remove old image form public folder
+        //image upload
+        if ($request->hasFile('image')) {
+            // Remove old image
             $oldImage = $request->image;
-            if(file_exists(public_path('photo/'.$oldImage))){
-                unlink(public_path('photo/'.$oldImage));
+            if ($oldImage && file_exists(public_path('photo/' . $oldImage))) {
+                unlink(public_path('photo/' . $oldImage));
             }
-            //save new image to public folder
-            $fileName = uniqid() .$request->file('image')->getClientOriginalName();
-            $request->file('image')->move(public_path().'/photo/' , $fileName);
-            $data['image'] = $fileName;
 
-        }else{
-            $data['image']= $request->image;
+            // Save new image
+            $fileName = uniqid() . $request->file('image')->getClientOriginalName();
+            $request->file('image')->move(public_path('photo'), $fileName);
+            $data['image'] = $fileName;
+        } else {
+            // Use old image
+            $data['image'] = $request->image;
         }
 
-        dd($data);
+        // dd($data);
 
         Product::findOrFail($id)->update($data);
-        return view("Admin.Template.Product.view");
+        return to_route('product.index');
 
     }
 

@@ -119,7 +119,7 @@
                 </div>
                 <div class="col d-flex">
                     <h4 class="mt-2">Total Product = {{ count($product) }}</h4>
-                    <a href="{{ route('product.limit') }}"><button class="btn btn-danger ms-3 text-light">Less
+                    <a href="{{ route('product.limit') }}"><button class="btn btn-danger ms-3 text-light">Limit
                             Stock</button></a>
                     <a href="{{ route('product.index') }}"><button class="btn btn-primary text-light ms-3">All
                             Stock</button></a>

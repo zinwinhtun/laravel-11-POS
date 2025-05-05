@@ -3,17 +3,10 @@
 @section('admin-ui')
     <div class="row">
         <div class="container">
-            {{-- {{dd($products->toArray())}} --}}
-            {{-- {{$products->name}}
-            {{$products->price}}
-            {{$products->category->name}}
-            {{$products->stock}}
-        {{$products->description}}
-            <img src="{{asset('photo/'.$products->image)}}" alt="...."> --}}
             <div class="card border rounded-lg shadow-lg mb-3 mt-5 m-auto" style="max-width: 80%;">
                 <div class="row no-gutters">
                   <div class="col-md-4">
-                    <img class="p-2 shadow-sm" src="{{asset('photo/'.$products->image)}}" width="300px" height="300px" alt="Product Image">
+                    <img class="p-2 shadow-sm" src="{{asset('/photo/'.$products->image)}}" width="300px" height="300px" alt="Product Image">
                   </div>
                   <div class="col-md-8">
                     <div class="card-body">
