@@ -11,8 +11,11 @@ use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\User;
 use RealRashid\SweetAlert\Facades\Alert;
+<<<<<<< HEAD
 
 use function PHPUnit\Framework\fileExists;
+=======
+>>>>>>> f615d9de5f7cccd66240f606f2037b0fc0f8bab1
 
 class ProfileController extends Controller
 {
@@ -53,9 +56,15 @@ class ProfileController extends Controller
             Alert::error('FAIL','password is no same our records. Try Again... ');
             return back();
         }
+<<<<<<< HEAD
     }
 
 
+=======
+
+
+    }
+>>>>>>> f615d9de5f7cccd66240f606f2037b0fc0f8bab1
     /**
      * Display the user's profile form.
      */
@@ -121,6 +130,7 @@ class ProfileController extends Controller
             'confirmPassword' => 'required|min:6|same:newPassword',
         ]);
     }
+<<<<<<< HEAD
 
     //get profile data
     private function getProfileData($request){
@@ -144,4 +154,6 @@ class ProfileController extends Controller
         'profile' => 'file|mimes:jpg,jpeg,png,webp,svg,gif'
        ]);
     }
+=======
+>>>>>>> f615d9de5f7cccd66240f606f2037b0fc0f8bab1
 }
