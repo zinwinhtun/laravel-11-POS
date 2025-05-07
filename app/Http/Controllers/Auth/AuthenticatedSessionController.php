@@ -28,7 +28,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
         //filter to login request account admin&superadmin go to dashboard
-        if($request->user()->role == 'admin' || $request->user()->role == 'super admin'){
+        if($request->user()->role == 'admin' || $request->user()->role == 'superadmin'){
             return to_route('admin.dashboard');
         }
         //filter to login request account user go to user home page

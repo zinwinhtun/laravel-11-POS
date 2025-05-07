@@ -8,9 +8,7 @@
                 <div class="card-body">
                     <h4 class="card-title">User Profile</h4>
                     {{-- user photo --}}
-                    <img class="img-thumbnail" width="200px" height="200px"
-                        src="{{ Auth::user()->profile != null ? asset('photo/' . Auth::user()->profile) || Auth::user()->profile : asset('photo/default-user.jpg') }}"
-                        alt="profile" />
+                     <img class="" width="200px" height="200px" src="{{Auth::user()->profile == null ? asset(asset('photo/default-user.jpg')) : asset('photo/'.Auth::user()->profile )}}" alt="profile" />
                     <ul class="list-ticked mt-4">
                         <li><strong> Name - </strong> {{ $user->name }}</li>
                         <li><strong> Nickname - </strong> {{ $user->nickname }}</li>
@@ -29,16 +27,16 @@
                         <h4 class="text-muted mt-2 col-4">Profile Setting</h4>
                         {{-- button group  --}}
                         <div class="col d-flex justify-content-end">
-                            @if ($user->role == 'super admin')
-                            <button class="btn btn-primary text-light me-4 ">Create Admin</button>
+                            @if ($user->role == 'superadmin')
+                            <a href="{{route('admin.create')}}"><button class="btn btn-sm btn-primary text-light  me-4 "> <small>Create Admin</small></button></a>
                             @endif
-                            <a href="{{route('profile.edit')}}"><button class="btn btn-primary text-light me-4">Update Profile</button></a>
+                            <a href="{{route('profile.edit')}}"><button class="btn btn-sm btn-primary text-light  me-4"> <small>Update Profile</small></button></a>
 
-                            <a href="{{ route('keyword.change') }}"><button class="btn btn-primary text-light me-4">Change Password</button></a>
+                            <a href="{{ route('keyword.change') }}"><button class="btn btn-sm btn-primary text-light  me-4"> <small>Change Password</small></button></a>
                         </div>
                     </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body" style="background-color: rgb(240, 240, 240) ;">
                     @yield('profile-setting')
                 </div>
             </div>

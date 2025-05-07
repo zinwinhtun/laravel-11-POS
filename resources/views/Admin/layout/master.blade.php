@@ -125,7 +125,7 @@
                     </li>
                     <li class="nav-item nav-profile dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
-                            <img src="{{Auth::user()->profile != null ? asset('photo/'. Auth::user()->profile) || Auth::user()->profile : asset('photo/default-user.jpg')}}" alt="profile" />
+                            <img src="{{Auth::user()->profile == null ? asset(asset('photo/default-user.jpg')) : asset('photo/'.Auth::user()->profile )}}" alt="profile" />
                             <span class="nav-profile-name">
                                 {{ Auth::user()->name == null ? Auth::user()->nickname : Auth::user()->name }}
                             </span>
@@ -177,9 +177,9 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="pages/charts/chartjs.html">
-                            <i class="mdi mdi-chart-pie menu-icon"></i>
-                            <span class="menu-title">Charts</span>
+                        <a class="nav-link" href="{{route('admin.show')}}">
+                            <i class="mdi mdi mdi-account-circle menu-icon"></i>
+                            <span class="menu-title">Admin List</span>
                         </a>
                     </li>
                     <li class="nav-item">

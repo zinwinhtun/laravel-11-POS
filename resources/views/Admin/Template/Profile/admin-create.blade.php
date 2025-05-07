@@ -1,18 +1,15 @@
 @extends('Admin.Template.Profile.index')
 
 @section('profile-setting')
+    <form action="{{route('admin.store')}}" method="post" enctype="multipart/form-data">
+        @csrf
 
-<form method="post" action="{{ route('profile.update') }}" enctype="multipart/form-data">
-    @csrf
-        <p class="card-description">
-          Account info
-        </p>
         <div class="row">
             {{-- name --}}
             <div class="col">
                 <div class="form-group">
                     <label for="name">Username</label>
-                    <input type="text" class="form-control" id="name" name="name" value="{{old('name',Auth::user()->name) }}">
+                    <input type="text" class="form-control" id="name" name="name">
                     @error('name')
                         <small class="text-danger">{{$message}}</small>
                     @enderror
@@ -22,7 +19,7 @@
             <div class="col">
                 <div class="form-group">
                     <label for="nickname">Nickname</label>
-                    <input type="text" class="form-control" id="nickname" name="nickname" value="{{old('nickname',Auth::user()->nickname) }}">
+                    <input type="text" class="form-control" id="nickname" name="nickname">
                     @error('nickname')
                         <small class="text-danger">{{$message}}</small>
                     @enderror
@@ -34,7 +31,7 @@
             <div class="col">
                 <div class="form-group">
                     <label for="email">E-mail</label>
-                    <input type="email" class="form-control" id="email" name="email" value="{{old('email',Auth::user()->email) }}">
+                    <input type="email" class="form-control" id="email" name="email">
                     @error('email')
                         <small class="text-danger">{{$message}}</small>
                     @enderror
@@ -44,7 +41,7 @@
             <div class="col">
                 <div class="form-group">
                     <label for="phone">Phone Number</label>
-                    <input type="number" class="form-control" id="phone" name="phone" value="{{old('phone', Auth::user()->phone)}}">
+                    <input type="number" class="form-control" id="phone" name="phone">
                     @error('phone')
                         <small class="text-danger">{{$message}}</small>
                     @enderror
@@ -56,7 +53,7 @@
             <div class="col">
                 <div class="form-group">
                     <label for="Address">Address</label>
-                    <input type="text" class="form-control" id="Address" name="address" value="{{old('address',Auth::user()->address) }}">
+                    <input type="text" class="form-control" id="Address" name="address">
                     @error('address')
                         <small class="text-danger">{{$message}}</small>
                     @enderror
@@ -66,20 +63,37 @@
             <div class="col">
                 <div class="form-group">
                     <label for="profile">Profile</label>
-                    <input type="file" class="form-control" id="profile" name="profile" accept="image/*">
+                    <input type="file" class="form-control" id="profile" name="profile">
                     @error('profile')
                         <small class="text-danger">{{$message}}</small>
                     @enderror
                   </div>
             </div>
         </div>
+
         <div class="row">
-            <div class="d-flex justify-content-end">
-                <a href="{{route('profile.index')}}"><button type="button" class="btn btn-sm btn-danger text-light me-3 "> <small>CANCLE </small></button></a>
-                <button type="submit" class="btn btn-sm btn-primary text-light "> <small>UPDATE</small></button>
+            <div class="col">
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" name="password">
+                    @error('password')
+                        <small class="text-danger">{{$message}}</small>
+                    @enderror
+                  </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label for="Confirm-password">Confirm Password</label>
+                    <input type="password" class="form-control" id="Confirm-password" name="confirm-password">
+                    @error('confirm-password')
+                        <small class="text-danger">{{$message}}</small>
+                    @enderror
+                  </div>
             </div>
         </div>
-
-</form>
-
+        <div class="d-flex justify-content-end">
+            <a href="{{route('profile.index')}}"><button class="btn btn-danger text-light me-3" type="button">CANCEL</button></a>
+            <button class="btn btn-primary text-light" type="submit">CREATE</button>
+        </div>
+    </form>
 @endsection

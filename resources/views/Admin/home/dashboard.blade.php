@@ -374,7 +374,7 @@
         </div>
     </div> --}}
     {{-- //codehere --}}
-    {{Auth::user()->nickname}}
+    {{Auth::user()->name}}
     hello
 
 @endsection

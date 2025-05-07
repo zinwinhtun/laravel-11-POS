@@ -17,20 +17,15 @@ Route::get('/auth/{provider}/redirect',[SocialLoginController::class,'redirect']
 Route::get('/auth/{provider}/callback',[SocialLoginController::class,'callBack'])->name('social.callBack');
 
 Route::get('/dashboard', function () {
-    return view('Admin.home.list');
+    return view('Admin.home.dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 Route::get('/haha',function(){
     return view('auth.custom-login-ui');
-});
-
-
-Route::get('/test',function(){
-    return 'this is test';
 });

@@ -12,6 +12,8 @@ use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\User;
 use RealRashid\SweetAlert\Facades\Alert;
 
+use function PHPUnit\Framework\fileExists;
+
 class ProfileController extends Controller
 {
     //go to profile in dashboard
@@ -51,9 +53,9 @@ class ProfileController extends Controller
             Alert::error('FAIL','password is no same our records. Try Again... ');
             return back();
         }
-
-
     }
+
+
     /**
      * Display the user's profile form.
      */
@@ -66,19 +68,30 @@ class ProfileController extends Controller
     /**
      * Update the user's profile information.
      */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function update(Request $request)
     {
-        $request->user()->fill($request->validated());
+        $this->profileValidation($request);
+        $data = $this->getProfileData($request);
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        if($request->hasFile('profile')){
+            //if user profile upload next time check have profile and remove exist file
+            if(Auth::user()->profile != null){
+                if(file_exists(public_path().'/photo/'. Auth::user()->profile)){
+                    unlink(public_path().'/photo/'. Auth::user()->profile);
+                }
+            }
+            //fist time user was upload his profile
+            $ProfileName = uniqid().$request->file('profile')->getClientOriginalName();
+            $request->file('profile')->move(public_path().'/photo/',$ProfileName);
+            $data['profile'] = $ProfileName;
+        }else{
+            $data['profile'] = Auth::user()->profile;
         }
 
-        $request->user()->save();
-
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        User::whereId(Auth::user()->id)->update($data);
+        Alert::success('Account Update', 'Success Account Updated');
+        return to_route('profile.index');
     }
-
     /**
      * Delete the user's account.
      */
@@ -107,5 +120,28 @@ class ProfileController extends Controller
             'newPassword' => 'required|min:6',
             'confirmPassword' => 'required|min:6|same:newPassword',
         ]);
+    }
+
+    //get profile data
+    private function getProfileData($request){
+        return[
+            'name' => $request->name,
+            'nickname' => $request->nickname,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'address' => $request->address,
+            'profile' => $request->profile
+        ];
+    }
+
+    //check profile info validation
+    private function profileValidation($request){
+       $request->validate([
+        'name' => 'required|unique:users,name,'.Auth::user()->id,
+        'email' => 'required|unique:users,email,'.Auth::user()->id,
+        'phone' => 'required',
+        'address' => 'max:200',
+        'profile' => 'file|mimes:jpg,jpeg,png,webp,svg,gif'
+       ]);
     }
 }

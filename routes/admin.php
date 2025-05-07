@@ -12,10 +12,19 @@ Route::prefix('admin')->middleware('admin')->group(function () {
     Route::get('profile',[ProfileController::class,'profile'])->name('profile.index');
     Route::get('change/password',[ProfileController::class,'passwordChange'])->name('keyword.change');
     Route::post('change/password',[ProfileController::class,'passwordUpdate'])->name('keyword.save');
+
     //category
     Route::resource('category', CategoryController::class);
     //product
     Route::resource('product', ProductController::class);
     Route::get('limit',[ProductController::class,'stockLimit'])->name('product.limit');//stock limit
+});
+
+//super admin auth
+// admin account CRUD
+Route::middleware('super')->prefix('account')->group(function(){
+    Route::get('create-admin',[AdminController::class,'adminCreate'])->name('admin.create');
+    Route::post('create-admin',[AdminController::class,'store'])->name('admin.store');
+    Route::get('admin-list',[AdminController::class,'adminList'])->name('admin.show');
 });
 
