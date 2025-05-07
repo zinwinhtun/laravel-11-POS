@@ -16,10 +16,14 @@ class SuperAdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
+<<<<<<< HEAD
         if(Auth::user()->role == 'superadmin'){
             return $next($request);
         }else{
             return back();
         }
+=======
+        return Auth::user()->role == 'superadmin' ? $next($request) : back();
+>>>>>>> f615d9de5f7cccd66240f606f2037b0fc0f8bab1
     }
 }

@@ -85,8 +85,13 @@ class ProductController extends Controller
         if ($request->hasFile('image')) {
             // Remove old image
             $oldImage = $request->image;
+<<<<<<< HEAD
             if ($oldImage && file_exists(public_path('/photo/' . $oldImage))) {
                 unlink(public_path('/photo/' . $oldImage));
+=======
+            if ($oldImage && file_exists(public_path('photo/' . $oldImage))) {
+                unlink(public_path('photo/' . $oldImage));
+>>>>>>> f615d9de5f7cccd66240f606f2037b0fc0f8bab1
             }
 
             // Save new image
