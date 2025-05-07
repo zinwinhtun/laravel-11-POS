@@ -12,7 +12,6 @@ Route::prefix('admin')->middleware('admin')->group(function () {
     Route::get('profile',[ProfileController::class,'profile'])->name('profile.index');
     Route::get('change/password',[ProfileController::class,'passwordChange'])->name('keyword.change');
     Route::post('change/password',[ProfileController::class,'passwordUpdate'])->name('keyword.save');
-
     //category
     Route::resource('category', CategoryController::class);
     //product

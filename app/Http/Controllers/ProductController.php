@@ -15,6 +15,7 @@ class ProductController extends Controller
     public function index()
     {
         $category = Category::all();
+        $category = Category::all();
         $product = Product::with('category')->when(request('searchData') , function($query){
             $search = request('searchData');
             $query->where('name', 'like', '%' . $search . '%')
@@ -84,6 +85,9 @@ class ProductController extends Controller
         //image upload
         if ($request->hasFile('image')) {
             // Remove old image
+        //image upload
+        if ($request->hasFile('image')) {
+            // Remove old image
             $oldImage = $request->image;
             if ($oldImage && file_exists(public_path('/photo/' . $oldImage))) {
                 unlink(public_path('/photo/' . $oldImage));
@@ -92,15 +96,24 @@ class ProductController extends Controller
             // Save new image
             $fileName = uniqid() . $request->file('image')->getClientOriginalName();
             $request->file('image')->move(public_path('photo'), $fileName);
+
+            // Save new image
+            $fileName = uniqid() . $request->file('image')->getClientOriginalName();
+            $request->file('image')->move(public_path('photo'), $fileName);
             $data['image'] = $fileName;
+        } else {
+            // Use old image
+            $data['image'] = $request->image;
         } else {
             // Use old image
             $data['image'] = $request->image;
         }
 
         // dd($data);
+        // dd($data);
 
         Product::findOrFail($id)->update($data);
+        return to_route('product.index');
         return to_route('product.index');
 
     }
