@@ -39,11 +39,35 @@ class AdminController extends Controller
         return to_route('profile.index');
     }
 
-    //show admin list
+    //admin list
     public function adminlist(){
-        dd('admin list');
+
+        $search = request('adminData');
+        $searchableColumns = ['name','nickname', 'email', 'phone', 'address','provider'];
+
+        $admin = User::where('role','admin')->when(request('adminData'),function($q) use ($search, $searchableColumns){
+                            foreach ($searchableColumns as $column) {
+                                $q->orWhere($column, 'LIKE', '%' . $search . '%');
+                            }
+                        })->latest()->get();
+        return view('Admin.Template.Profile.adminList',compact('admin'));
 
     }
+
+    //admin show
+    public function view($id){
+        $adminProfile = User::whereId($id)->first();
+        return view('Admin.Template.Profile.admin-view',compact('adminProfile'));
+    }
+
+    //admin account
+    public function delete($id){
+
+        User::findOrFail($id)->delete();
+        Alert::success('Delete Admin Account','You Delete Admin Account Successfully');
+        return back();
+    }
+
     //get admin account data
     private function getData($request){
         return [
@@ -62,17 +86,17 @@ class AdminController extends Controller
     //admin data validation
     private function adminValidationCheck($request,$action){
        $rules = [
-        'name' => 'required|min:5|max:10|unique:users,name,' . $request->id,
+        'name' => 'required|min:5|unique:users,name,' . $request->id,
         'nickname' => 'unique:users,name,' . $request->id,
         'email' => 'required|unique:users,email,'.$request->id,
         'phone' => 'required|numeric',
         'address' => 'required|max:50',
-        'profile' => 'required|file|mimes:png,jpg,jpeg,svg,gif',
+        'profile' => 'required|file|mimes:png,jpg,jpeg,svg,gif,webp',
         'password' => 'required|min:6',
         'confirm-password' => 'required|min:6|same:password'
        ];
 
-       $rules['profile'] = $action == 'store' ? 'required|file|mimes:png,jpg,jpeg,svg,gif': 'file|mimes:png,jpg,jpeg,svg,gif';
+       $rules['profile'] = $action == 'store' ? 'required|file|mimes:png,jpg,jpeg,svg,gif,webp': 'file|mimes:png,jpg,jpeg,svg,gif,webp';
 
        $request->validate($rules);
     }

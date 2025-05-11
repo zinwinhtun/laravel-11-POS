@@ -9,7 +9,7 @@
             <div class="col">
                 <div class="form-group">
                     <label for="name">Username</label>
-                    <input type="text" class="form-control" id="name" name="name">
+                    <input type="text" class="form-control" id="name" value="{{old('name')}}" name="name">
                     @error('name')
                         <small class="text-danger">{{$message}}</small>
                     @enderror
@@ -19,7 +19,7 @@
             <div class="col">
                 <div class="form-group">
                     <label for="nickname">Nickname</label>
-                    <input type="text" class="form-control" id="nickname" name="nickname">
+                    <input type="text" class="form-control" id="nickname" value="{{old('nickname')}}" name="nickname">
                     @error('nickname')
                         <small class="text-danger">{{$message}}</small>
                     @enderror
@@ -31,7 +31,7 @@
             <div class="col">
                 <div class="form-group">
                     <label for="email">E-mail</label>
-                    <input type="email" class="form-control" id="email" name="email">
+                    <input type="email" class="form-control" id="email" value="{{old('email')}}" name="email">
                     @error('email')
                         <small class="text-danger">{{$message}}</small>
                     @enderror
@@ -41,7 +41,7 @@
             <div class="col">
                 <div class="form-group">
                     <label for="phone">Phone Number</label>
-                    <input type="number" class="form-control" id="phone" name="phone">
+                    <input type="number" class="form-control" id="phone" value="{{old('phone')}}" name="phone">
                     @error('phone')
                         <small class="text-danger">{{$message}}</small>
                     @enderror
@@ -53,7 +53,7 @@
             <div class="col">
                 <div class="form-group">
                     <label for="Address">Address</label>
-                    <input type="text" class="form-control" id="Address" name="address">
+                    <input type="text" class="form-control" id="Address" value="{{old('address')}}" name="address">
                     @error('address')
                         <small class="text-danger">{{$message}}</small>
                     @enderror

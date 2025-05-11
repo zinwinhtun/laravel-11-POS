@@ -176,12 +176,14 @@
                             <span class="menu-title">Product</span>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route('admin.show')}}">
+                    @if (Auth::user()->role == 'superadmin')
+                        <li class="nav-item">
+                        <a class="nav-link" href="{{route('admin.list')}}">
                             <i class="mdi mdi mdi-account-circle menu-icon"></i>
                             <span class="menu-title">Admin List</span>
                         </a>
                     </li>
+                    @endif
                     <li class="nav-item">
                         <a class="nav-link" href="pages/tables/basic-table.html">
                             <i class="mdi mdi-grid-large menu-icon"></i>

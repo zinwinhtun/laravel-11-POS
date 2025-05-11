@@ -27,7 +27,10 @@ Route::prefix('admin')->middleware('admin')->group(function () {
 Route::middleware('super')->prefix('account')->group(function(){
     Route::get('create-admin',[AdminController::class,'adminCreate'])->name('admin.create');
     Route::post('create-admin',[AdminController::class,'store'])->name('admin.store');
-    Route::get('admin-list',[AdminController::class,'adminList'])->name('admin.show');
+    //admin list
+    Route::get('admin-list',[AdminController::class,'adminList'])->name('admin.list');
+    Route::get('admin-view/{id}',[AdminController::class,'view'])->name('admin.show');
+    Route::delete('admin-delete/{id}',[AdminController::class,'delete'])->name('admin.delete');
 
     // payment
     Route::resource('payment',paymentController::class);
