@@ -185,13 +185,13 @@
                     <li class="nav-item">
                         <a class="nav-link" href="pages/tables/basic-table.html">
                             <i class="mdi mdi-grid-large menu-icon"></i>
-                            <span class="menu-title">Tables</span>
+                            <span class="menu-title">User List</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="pages/icons/mdi.html">
+                        <a class="nav-link" href="{{route('payment.index')}}">
                             <i class="mdi mdi-emoticon menu-icon"></i>
-                            <span class="menu-title">Icons</span>
+                            <span class="menu-title">Payment Account</span>
                         </a>
                     </li>
                     <li class="nav-item">

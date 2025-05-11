@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\paymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -18,6 +19,7 @@ Route::prefix('admin')->middleware('admin')->group(function () {
     //product
     Route::resource('product', ProductController::class);
     Route::get('limit',[ProductController::class,'stockLimit'])->name('product.limit');//stock limit
+
 });
 
 //super admin auth
@@ -26,5 +28,8 @@ Route::middleware('super')->prefix('account')->group(function(){
     Route::get('create-admin',[AdminController::class,'adminCreate'])->name('admin.create');
     Route::post('create-admin',[AdminController::class,'store'])->name('admin.store');
     Route::get('admin-list',[AdminController::class,'adminList'])->name('admin.show');
+
+    // payment
+    Route::resource('payment',paymentController::class);
 });
 

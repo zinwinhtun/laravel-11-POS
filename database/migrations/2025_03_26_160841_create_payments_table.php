@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('account_name');
             $table->string('account_number');
-            $table->char('type',20);
+            $table->enum('payment_methods',['Cash','Card','K-Pay','CB-Pay','Wave Money','True Money','AYA-Pay']);
             $table->timestamps();
         });
     }

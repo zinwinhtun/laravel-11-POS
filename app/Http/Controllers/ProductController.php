@@ -85,45 +85,22 @@ class ProductController extends Controller
         //image upload
         if ($request->hasFile('image')) {
             // Remove old image
-        //image upload
-        if ($request->hasFile('image')) {
-            // Remove old image
             $oldImage = $request->image;
-<<<<<<< HEAD
             if ($oldImage && file_exists(public_path('/photo/' . $oldImage))) {
                 unlink(public_path('/photo/' . $oldImage));
-=======
-<<<<<<< HEAD
-            if ($oldImage && file_exists(public_path('/photo/' . $oldImage))) {
-                unlink(public_path('/photo/' . $oldImage));
-=======
-            if ($oldImage && file_exists(public_path('photo/' . $oldImage))) {
-                unlink(public_path('photo/' . $oldImage));
->>>>>>> f615d9de5f7cccd66240f606f2037b0fc0f8bab1
->>>>>>> cb57f9997a6381deddcbbb91699e924badade034
+
             }
 
             // Save new image
             $fileName = uniqid() . $request->file('image')->getClientOriginalName();
             $request->file('image')->move(public_path('photo'), $fileName);
-
-            // Save new image
-            $fileName = uniqid() . $request->file('image')->getClientOriginalName();
-            $request->file('image')->move(public_path('photo'), $fileName);
             $data['image'] = $fileName;
-        } else {
-            // Use old image
-            $data['image'] = $request->image;
-        } else {
+        }else {
             // Use old image
             $data['image'] = $request->image;
         }
 
-        // dd($data);
-        // dd($data);
-
         Product::findOrFail($id)->update($data);
-        return to_route('product.index');
         return to_route('product.index');
 
     }
