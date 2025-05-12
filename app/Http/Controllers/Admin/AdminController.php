@@ -45,11 +45,13 @@ class AdminController extends Controller
         $search = request('adminData');
         $searchableColumns = ['name','nickname', 'email', 'phone', 'address','provider'];
 
-        $admin = User::where('role','admin')->when(request('adminData'),function($q) use ($search, $searchableColumns){
-                            foreach ($searchableColumns as $column) {
-                                $q->orWhere($column, 'LIKE', '%' . $search . '%');
-                            }
-                        })->latest()->get();
+        $admin = User::when(request('adminData'),function($q) use ($search, $searchableColumns){
+                            $q->where(function($query) use ($search,$searchableColumns){
+                                foreach ($searchableColumns as $column) {
+                                $query->orWhere($column, 'LIKE', '%' . $search . '%');
+                                }
+                            });
+                        })->whereIn('role',['admin'])->latest()->get();
         return view('Admin.Template.Profile.adminList',compact('admin'));
 
     }

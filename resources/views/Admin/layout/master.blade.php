@@ -176,20 +176,6 @@
                             <span class="menu-title">Product</span>
                         </a>
                     </li>
-                    @if (Auth::user()->role == 'superadmin')
-                        <li class="nav-item">
-                        <a class="nav-link" href="{{route('admin.list')}}">
-                            <i class="mdi mdi mdi-account-circle menu-icon"></i>
-                            <span class="menu-title">Admin List</span>
-                        </a>
-                    </li>
-                    @endif
-                    <li class="nav-item">
-                        <a class="nav-link" href="pages/tables/basic-table.html">
-                            <i class="mdi mdi-grid-large menu-icon"></i>
-                            <span class="menu-title">User List</span>
-                        </a>
-                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{route('payment.index')}}">
                             <i class="mdi mdi-emoticon menu-icon"></i>
@@ -205,24 +191,16 @@
                         </a>
                         <div class="collapse" id="auth">
                             <ul class="nav flex-column sub-menu">
+                                @if (Auth::user()->role == 'superadmin')
                                 <li class="nav-item">
-                                    <a class="nav-link" href="pages/samples/login.html">
-                                        Login
+                                    <a class="nav-link" href="{{route('admin.list')}}">
+                                        Admin List
                                     </a>
                                 </li>
+                                @endif
                                 <li class="nav-item">
-                                    <a class="nav-link" href="pages/samples/login-2.html">
-                                        Login 2
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="pages/samples/register.html">
-                                        Register
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="pages/samples/register-2.html">
-                                        Register 2
+                                    <a class="nav-link" href="{{route('user.list')}}">
+                                        User List
                                     </a>
                                 </li>
                                 <li class="nav-item">
