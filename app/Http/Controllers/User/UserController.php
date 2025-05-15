@@ -9,9 +9,10 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class UserController extends Controller
 {
-    //direct user page
-    public function home(){
-        return view('user.Template.main');
+
+    //client user ui show page
+    public function clientUi(){
+        return view('Client.Layout.master');
     }
 
     //user list in admin panel
@@ -43,6 +44,11 @@ class UserController extends Controller
         User::findOrFail($id)->delete();
         Alert::success('Delete User Account','You Delete User Account Successfully');
         return back();
+    }
+
+    //client side
+    public function about(){
+        return "this is about page";
     }
 
 }

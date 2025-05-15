@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
 use App\Http\Controllers\ProfileController;
@@ -17,7 +18,16 @@ Route::get('/auth/{provider}/redirect',[SocialLoginController::class,'redirect']
 Route::get('/auth/{provider}/callback',[SocialLoginController::class,'callBack'])->name('social.callBack');
 
 Route::get('/dashboard', function () {
-    return view('Admin.home.dashboard');
+
+    if(Auth::user()->role == 'admin' || Auth::user()->role == 'superadmin'){
+        return view('Admin.home.dashboard');
+    }elseif(Auth::user()->role == 'user'){
+        return to_route('dashboard');
+    }
+    else{
+        return Auth::logout();
+    }
+
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -27,5 +37,5 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/haha',function(){
-    return view('auth.custom-login-ui');
+    return 'this is test....';
 });

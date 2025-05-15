@@ -33,11 +33,13 @@ class AuthenticatedSessionController extends Controller
         }
         //filter to login request account user go to user home page
         if($request->user()->role == 'user'){
-            return to_route('user.home');
+            return to_route('client');
         }
 
         return redirect()->intended(route('dashboard', absolute: false));
     }
+
+
 
     /**
      * Destroy an authenticated session.
