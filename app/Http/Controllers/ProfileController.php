@@ -19,12 +19,19 @@ class ProfileController extends Controller
     //go to profile in dashboard
     public function profile(){
         $user = Auth::user();
-        return view('Admin.Template.Profile.index',compact('user'));
+        $image = $this->getImage();
+        if(Auth::user()->role == 'user'){
+            return view('Client.Template.Profile.index',compact('user','image'));
+        }
+        return view('Admin.Template.Profile.index',compact('user','image'));
     }
 
     //password page
     public function passwordChange(){
         $user = Auth::user();
+        if(Auth::user()->role == 'user'){
+            return view('Client.Template.Profile.psw',compact('user'));
+        }
         return view('Admin.Template.Profile.changePsw',compact('user'));
     }
 
@@ -62,7 +69,13 @@ class ProfileController extends Controller
     public function edit(Request $request): View
     {
         $user = Auth::user();
-        return view('Admin.Template.Profile.profileUpdate',compact('user'));
+        $image = $this->getImage();
+
+        if (Auth::user()->role == 'user') {
+           return view('Client.Template.Profile.edit',compact('user','image'));
+        }
+
+        return view('Admin.Template.Profile.profileUpdate',compact('user','image'));
     }
 
     /**
@@ -87,6 +100,7 @@ class ProfileController extends Controller
         }else{
             $data['profile'] = Auth::user()->profile;
         }
+
 
         User::whereId(Auth::user()->id)->update($data);
         Alert::success('Account Update', 'Success Account Updated');
@@ -143,5 +157,25 @@ class ProfileController extends Controller
         'address' => 'max:200',
         'profile' => 'file|mimes:jpg,jpeg,png,webp,svg,gif'
        ]);
+    }
+
+    //CAll image path
+    private function getImage(){
+        $user = Auth::user();
+         // Default image path
+        $defaultImage = asset('/photo/default-user.jpg');
+
+        // Determine the image source
+        if ($user->profile) {
+            // Check if it's a URL (social login)
+            if (filter_var($user->profile, FILTER_VALIDATE_URL)) {
+                return $image = $user->profile;
+            } else {
+                // Otherwise, assume it's stored locally in storage
+                return $image = asset('/photo/' . $user->profile);
+            }
+        } else {
+            return $image = $defaultImage;
+        }
     }
 }

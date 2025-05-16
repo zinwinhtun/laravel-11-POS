@@ -9,7 +9,7 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-4 offset-1">
-                     <img class="" width="300px" height="300px" src="{{$adminProfile->profile == null ? asset(asset('photo/default-user.jpg')) : asset('photo/'.$adminProfile->profile )}}" alt="profile" />
+                     <img class="" width="300px" height="300px" src="{{$image}}" alt="profile" />
 
                 </div>
                 <div class="col ms-5">

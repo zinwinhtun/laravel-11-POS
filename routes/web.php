@@ -31,6 +31,10 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    //profile process
+    Route::get('profile/info',[ProfileController::class,'profile'])->name('profile.index');
+    Route::get('change/password',[ProfileController::class,'passwordChange'])->name('keyword.change');
+    Route::post('change/password',[ProfileController::class,'passwordUpdate'])->name('keyword.save');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

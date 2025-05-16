@@ -41,7 +41,6 @@ class AdminController extends Controller
 
     //admin list
     public function adminlist(){
-
         $search = request('adminData');
         $searchableColumns = ['name','nickname', 'email', 'phone', 'address','provider'];
 
@@ -59,7 +58,8 @@ class AdminController extends Controller
     //admin show
     public function view($id){
         $adminProfile = User::whereId($id)->first();
-        return view('Admin.Template.Profile.admin-view',compact('adminProfile'));
+        $image = $this->getImage();
+        return view('Admin.Template.Profile.admin-view',compact('adminProfile','image'));
     }
 
     //admin account
@@ -101,5 +101,26 @@ class AdminController extends Controller
        $rules['profile'] = $action == 'store' ? 'required|file|mimes:png,jpg,jpeg,svg,gif,webp': 'file|mimes:png,jpg,jpeg,svg,gif,webp';
 
        $request->validate($rules);
+    }
+
+    //CAll image path
+    private function getImage(){
+        $user = Auth::user();
+         // Default image path
+        $defaultImage = asset('/photo/default-user.jpg');
+
+        // Determine the image source
+        if ($user->profile) {
+            // Check if it's a URL (social login)
+            //FILTER_VALIDATE_URL is check variable have URL (http/https)
+            if (filter_var($user->profile, FILTER_VALIDATE_URL)) {
+                return $image = $user->profile;
+            } else {
+                // Otherwise, assume it's stored locally in storage
+                return $image = asset('/photo/' . $user->profile);
+            }
+        } else {
+            return $image = $defaultImage;
+        }
     }
 }

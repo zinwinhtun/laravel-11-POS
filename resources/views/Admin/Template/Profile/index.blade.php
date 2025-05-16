@@ -8,7 +8,7 @@
                 <div class="card-body">
                     <h4 class="card-title">User Profile</h4>
                     {{-- user photo --}}
-                     <img class="" width="200px" height="200px" src="{{Auth::user()->profile == null ? asset(asset('photo/default-user.jpg')) : asset('photo/'.Auth::user()->profile )}}" alt="profile" />
+                     <img class="" width="200px" height="200px" src="{{$image}}" alt="profile" />
                     <ul class="list-ticked mt-4">
                         <li><strong> Name - </strong> {{ $user->name }}</li>
                         <li><strong> Nickname - </strong> {{ $user->nickname }}</li>
