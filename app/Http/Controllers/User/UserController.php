@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\User;
 
 use App\Models\User;
+use App\Models\Comment;
+use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Category;
-use App\Models\Product;
+use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class UserController extends Controller
@@ -31,6 +33,15 @@ class UserController extends Controller
                     //sort data by name price date
                     ->orderBy($sortBy,$sortOrder)->paginate(8)->withQueryString();
         return view('Client.Layout.master',compact('products','categories'));
+    }
+
+    //product detail
+    public function productDetail($id){
+        $user = User::get();
+        $product = Product::with('category')->findOrFail($id);
+        $productList = Product::with('category')->get();
+        $comment = Comment::with( 'product:id','user:id,name,nickname,profile')->where('product_id',$id)->latest()->get();
+        return view('Client.Template.Card.product-card',compact('product','productList','comment'));
     }
 
     //user list in admin panel
@@ -64,9 +75,24 @@ class UserController extends Controller
         return back();
     }
 
-    //client side
-    public function about(){
-        return "this is about page";
+    //CAll image path
+    private function getImage(){
+        $user = Auth::user();
+         // Default image path
+        $defaultImage = asset('/photo/default-user.jpg');
+
+        // Determine the image source
+        if ($user->profile) {
+            // Check if it's a URL (social login)
+            if (filter_var($user->profile, FILTER_VALIDATE_URL)) {
+                return $image = $user->profile;
+            } else {
+                // Otherwise, assume it's stored locally in storage
+                return $image = asset('/photo/' . $user->profile);
+            }
+        } else {
+            return $image = $defaultImage;
+        }
     }
 
 }
