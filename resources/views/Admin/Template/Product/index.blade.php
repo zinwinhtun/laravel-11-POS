@@ -149,7 +149,7 @@
                             <div class="row d-flex">
                                 <p class="card-title">Product list</p>
                                 <div class="">
-                                    {{ $product->links() }}
+                                    <small>{{ $product->links()}}</small>
                                 </div>
                             </div>
                             <div class="table-responsive">

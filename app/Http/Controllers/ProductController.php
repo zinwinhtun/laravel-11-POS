@@ -15,7 +15,6 @@ class ProductController extends Controller
     public function index()
     {
         $category = Category::all();
-        $category = Category::all();
         $product = Product::with('category')->when(request('searchData') , function($query){
             $search = request('searchData');
             $query->where('name', 'like', '%' . $search . '%')
@@ -88,7 +87,6 @@ class ProductController extends Controller
             $oldImage = $request->image;
             if ($oldImage && file_exists(public_path('/photo/' . $oldImage))) {
                 unlink(public_path('/photo/' . $oldImage));
-
             }
 
             // Save new image
