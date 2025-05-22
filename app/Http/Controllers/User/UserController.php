@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Rating;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -41,7 +42,10 @@ class UserController extends Controller
         $product = Product::with('category')->findOrFail($id);
         $productList = Product::with('category')->get();
         $comment = Comment::with( 'product:id','user:id,name,nickname,profile')->where('product_id',$id)->latest()->get();
-        return view('Client.Template.Card.product-card',compact('product','productList','comment'));
+        $rating = number_format(Rating::where('product_id',$id)->avg('count'));  //get avarage count in rating tabel
+        $userRating = number_format(Rating::where('product_id',$id)->where('user_id',Auth::user()->id)->value('count'));
+        // dd($userRating);
+        return view('Client.Template.Card.product-card',compact('product','productList','comment','rating','userRating'));
     }
 
     //user list in admin panel

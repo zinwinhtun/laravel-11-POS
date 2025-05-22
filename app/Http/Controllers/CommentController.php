@@ -17,8 +17,7 @@ class CommentController extends Controller
 
     // delete comment only self
     public function delete($id){
-        Comment::destroy($id);
-        Alert::success('Delete Review','You deleted a review successfully...');
+        Comment::whereId($id)->delete($id);
         return back();
     }
 }

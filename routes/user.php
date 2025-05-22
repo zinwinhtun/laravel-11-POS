@@ -1,14 +1,22 @@
 <?php
 
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RatingController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\UserController;
 
 Route::prefix('client')->middleware('user')->group(function () {
     Route::get('client',[UserController::class,'clientUi'])->name('client');
     Route::get('product-detail/{id}',[UserController::class,'productDetail'])->name('product.detail');
+    //comment
     Route::post('comment',[CommentController::class,'commentCreate'])->name('comment.save');
-    Route::post('comment/delete/{id}',[CommentController::class,'delete'])->name('comment.delete');
+    Route::get('comment/delete/{id}',[CommentController::class,'delete'])->name('comment.delete');
+    //rating
+    Route::post('rating',[RatingController::class,'setRate'])->name('rating');
+    // contact mail
+    Route::get('contact',[ContactController::class,'index'])->name('contact.index');
+    Route::post('send-mail',[ContactController::class,'sendMail'])->name('mail.send');
 });
