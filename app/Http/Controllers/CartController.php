@@ -27,4 +27,11 @@ class CartController extends Controller
         Alert::success('Add To Cart','Add Product to Cart Successfully');
         return to_route('client');
     }
+
+    //delete cart
+    public function cartDelete(Request $request){
+        $cart_id = $request['cart_id'];
+        Cart::whereId($cart_id)->delete();
+        return response()->json(['status' => "success",'message' => "Cart Delete Success"],200);
+    }
 }

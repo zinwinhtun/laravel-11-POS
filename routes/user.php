@@ -23,4 +23,5 @@ Route::prefix('client')->middleware('user')->group(function () {
     //cart
     Route::get('cart',[CartController::class,'cart'])->name('cart.index');
     Route::post('cart',[CartController::class,'addToCart'])->name('cart.addToCart');
+    Route::get('delete',[CartController::class,'cartDelete'])->name('cart.delete');
 });

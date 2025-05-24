@@ -51,7 +51,8 @@
                                     <p class="mb-0 mt-4 total">{{ $item->Product->price * $item->qty }} MMK</p>
                                 </td>
                                 <td>
-                                    <button class="btn btn-md rounded-circle bg-light border mt-4">
+                                    <input type="hidden" class="cart_id" value="{{$item->id}}">
+                                    <button class="btn btn-md rounded-circle bg-light border mt-4 btn-remove">
                                         <i class="fa fa-times text-danger"></i>
                                     </button>
                                 </td>
@@ -61,11 +62,6 @@
 
                     </tbody>
                 </table>
-            </div>
-            <div class="mt-5">
-                <input type="text" class="border-0 border-bottom rounded me-5 py-3 mb-4" placeholder="Coupon Code">
-                <button class="btn border-secondary rounded-pill px-4 py-3 text-primary" type="button">Apply
-                    Coupon</button>
             </div>
             <div class="row g-4 justify-content-end">
                 <div class="col-8"></div>
@@ -114,10 +110,10 @@
             })
 
             function countCalculate(e) {
-                $parent = $(e).parents("tr");
-                $price = $parent.find('.price').text().replace("MMK", "");
-                $qty = $parent.find('.qty').val();
-                $parent.find('.total').text($price * $qty + " MMK");
+                parent = $(e).parents("tr");
+                price = parent.find('.price').text().replace("MMK", "");
+                qty = parent.find('.qty').val();
+                parent.find('.total').text(price * qty + " MMK");
             }
 
             // subtotal calculation
@@ -129,6 +125,28 @@
                 $('#subtotal').html(`${total} MMK`);
             })
             }
+
+            //delete process
+            $(".btn-remove").click(function(){
+                parent = $(this).parents("tr"); // cache parent element
+                cartId = parent.find('.cart_id').val(); //get cart id from parent element
+                //set data
+                deleteData = {
+                    'cart_id' : cartId
+                }
+
+                $.ajax({
+                    //api doc | url -> /client/delete | obj {cart_id : value}
+                    type : "GET",
+                    url : "/client/delete",
+                    data : deleteData,
+                    dataType : "json",
+                    success : function(response){
+                        //if delete success DOM refresh else still normal
+                        response.status == 'success' ? location.reload() : '';
+                    }
+                })
+            })
         })
     </script>
 @endsection
