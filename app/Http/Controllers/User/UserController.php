@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Cart;
 use App\Models\Rating;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -21,6 +22,8 @@ class UserController extends Controller
         $sortBy = request('sort_by','created_at');
         //get asc & desc sort value from url // desc is default
         $sortOrder = request('sort_order','desc');
+        //get cart
+        $cart = Cart::with('user:id')->where('user_id',Auth::user()->id)->get();
         $categories = Category::get();
         $products = Product::with('category')
                     // filter with category name
@@ -33,7 +36,7 @@ class UserController extends Controller
                     })
                     //sort data by name price date
                     ->orderBy($sortBy,$sortOrder)->paginate(8)->withQueryString();
-        return view('Client.Layout.master',compact('products','categories'));
+        return view('Client.Layout.master',compact('products','categories','cart'));
     }
 
     //product detail

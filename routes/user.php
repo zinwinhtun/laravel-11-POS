@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProductController;
@@ -19,4 +20,7 @@ Route::prefix('client')->middleware('user')->group(function () {
     // contact mail
     Route::get('contact',[ContactController::class,'index'])->name('contact.index');
     Route::post('send-mail',[ContactController::class,'sendMail'])->name('mail.send');
+    //cart
+    Route::get('cart',[CartController::class,'cart'])->name('cart.index');
+    Route::post('cart',[CartController::class,'addToCart'])->name('cart.addToCart');
 });

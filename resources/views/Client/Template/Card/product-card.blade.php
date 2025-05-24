@@ -20,32 +20,37 @@
                             <h5 class="fw-bold mb-3">{{ $product->price }} MMK</h5>
                             <div class="d-flex mb-4">
                                 {{-- show rating between 1 to 5  --}}
-                                @for ($i = 1; $i <= $rating ; $i++)
+                                @for ($i = 1; $i <= $rating; $i++)
                                     <i class="fa fa-star text-secondary"></i>
                                 @endfor
 
-                                 @for ($j = $rating+1; $j <= 5 ; $j++)
+                                @for ($j = $rating + 1; $j <= 5; $j++)
                                     <i class="fa fa-star"></i>
                                 @endfor
 
                             </div>
-                            <div class="input-group quantity mb-5" style="width: 100px;">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-minus rounded-circle bg-light border">
-                                        <i class="fa fa-minus"></i>
-                                    </button>
+                            {{-- add to cart  --}}
+                            <form action="{{ route('cart.addToCart') }}" class="d-inline" method="POST">
+                                @csrf
+                                <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+                                <input type="hidden" name="product_id" value="{{$product->id}}">
+                                <div class="input-group quantity mb-5" style="width: 100px;">
+                                    <div class="input-group-btn">
+                                        <button type="button" class="btn btn-sm btn-minus rounded-circle bg-light border">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
+                                    </div>
+                                    <input type="text" name="qty" class="form-control form-control-sm text-center border-0"
+                                        value="1">
+                                    <div class="input-group-btn">
+                                        <button type="button" class="btn btn-sm btn-plus rounded-circle bg-light border">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
                                 </div>
-                                <input type="text" class="form-control form-control-sm text-center border-0"
-                                    value="1">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-plus rounded-circle bg-light border">
-                                        <i class="fa fa-plus"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <a href="#" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary">
-                                <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-
+                                <button type="submit" class=" btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary">
+                                    <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</button>
+                            </form>
                             <!-- Rate Button  modal -->
                             <button type="button"
                                 class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"
@@ -64,7 +69,8 @@
                                         <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title text-uppercase" id="staticBackdropLabel">Rate star for
+                                                <h5 class="modal-title text-uppercase" id="staticBackdropLabel">Rate star
+                                                    for
                                                     {{ $product->name }}</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
@@ -73,26 +79,30 @@
                                                 <div class="rating">
                                                     <div class="star-icon">
                                                         @if ($userRating == 0)
-                                                        <input type="radio" name="count" id="star1" checked value="1">
-                                                        <label for="star1">&#9733;</label>
-                                                        <input type="radio" name="count" id="star2"value="2">
-                                                        <label for="star2">&#9733;</label>
-                                                        <input type="radio" name="count" id="star3"value="3">
-                                                        <label for="star3">&#9733;</label>
-                                                        <input type="radio" name="count" id="star4"value="4">
-                                                        <label for="star4">&#9733;</label>
-                                                        <input type="radio" name="count" id="star5"  value="5">
-                                                        <label for="star5">&#9733;</label>
-                                                    @else
-                                                        @for ($i = 1; $i <= $userRating ; $i++)
-                                                            <input type="radio" checked name="count" id="star{{$i}}"value="{{$i}}">
-                                                            <label for="star{{$i}}">&#9733;</label>
-                                                        @endfor
-                                                        @for ($j = $userRating+1; $j <= 5 ; $j++)
-                                                            <input type="radio"  name="count" id="star{{$j}}"value="{{$j}}">
-                                                            <label for="star{{$j}}">&#9733;</label>
-                                                        @endfor
-                                                    @endif
+                                                            <input type="radio" name="count" id="star1" checked
+                                                                value="1">
+                                                            <label for="star1">&#9733;</label>
+                                                            <input type="radio" name="count" id="star2"value="2">
+                                                            <label for="star2">&#9733;</label>
+                                                            <input type="radio" name="count" id="star3"value="3">
+                                                            <label for="star3">&#9733;</label>
+                                                            <input type="radio" name="count" id="star4"value="4">
+                                                            <label for="star4">&#9733;</label>
+                                                            <input type="radio" name="count" id="star5"
+                                                                value="5">
+                                                            <label for="star5">&#9733;</label>
+                                                        @else
+                                                            @for ($i = 1; $i <= $userRating; $i++)
+                                                                <input type="radio" checked name="count"
+                                                                    id="star{{ $i }}"value="{{ $i }}">
+                                                                <label for="star{{ $i }}">&#9733;</label>
+                                                            @endfor
+                                                            @for ($j = $userRating + 1; $j <= 5; $j++)
+                                                                <input type="radio" name="count"
+                                                                    id="star{{ $j }}"value="{{ $j }}">
+                                                                <label for="star{{ $j }}">&#9733;</label>
+                                                            @endfor
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>
