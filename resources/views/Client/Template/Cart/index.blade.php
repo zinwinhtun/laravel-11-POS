@@ -38,6 +38,7 @@
                                                 <i class="fa fa-minus"></i>
                                             </button>
                                         </div>
+                                        <input type="hidden" class="productId" value="{{$item->product->id}}">
                                         <input type="text" class="form-control form-control-sm qty text-center border-0"
                                             value="{{ $item->qty }}">
                                         <div class="input-group-btn">
@@ -87,7 +88,8 @@
                             <h5 class="mb-0 ps-4 me-4">Total</h5>
                             <p class="mb-0 pe-4">{{$total + 1000}} MMK</p>
                         </div>
-                        <button class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4"
+                        <input type="hidden" id="userId" value="{{Auth::user()->id}}">
+                        <button id="btn-process" class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4"
                             type="button">Proceed Checkout</button>
                     </div>
                 </div>
@@ -108,14 +110,12 @@
                 countCalculate(this);
                 subTotal();
             })
-
             function countCalculate(e) {
                 parent = $(e).parents("tr");
                 price = parent.find('.price').text().replace("MMK", "");
                 qty = parent.find('.qty').val();
                 parent.find('.total').text(price * qty + " MMK");
             }
-
             // subtotal calculation
             function subTotal() {
                 total = 0;
@@ -125,7 +125,6 @@
                 $('#subtotal').html(`${total} MMK`);
             })
             }
-
             //delete process
             $(".btn-remove").click(function(){
                 parent = $(this).parents("tr"); // cache parent element
@@ -146,6 +145,37 @@
                         response.status == 'success' ? location.reload() : '';
                     }
                 })
+            })
+            //checkout bill process
+            $("#btn-process").click(function(){
+                orderList = [];
+                userId = $('#userId').val();
+                orderCode = "FZ-"+userId+"-POS-"+ Math.floor(Math.random() * 1000000);
+
+                $('#cartTable tbody tr').each(function(index , row){
+                    productId = $(row).find('.productId').val();
+                qty = $(row).find('.qty').val();
+
+                    orderList.push({
+                        'product_id' : productId,
+                        'user_id' : userId,
+                        'count' : qty,
+                        'status' : 0,
+                        'order_code' : orderCode
+                    })
+                })
+
+                 $.ajax({
+                    //api doc | url -> /cart/tempstorage | obj {cart_id : value}
+                    type : "GET",
+                    url : "/client/tempstorage",
+                    data : Object.assign({},orderList),//change obj format declear
+                    dataType : "json",
+                    success : function(res){
+                        res.status == 'success' ? location.href = '/client/cart/payment' : location.reload();
+                    }
+                })
+
             })
         })
     </script>

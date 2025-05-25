@@ -33,7 +33,6 @@ Route::middleware('super')->prefix('account')->group(function(){
 
     //user account delete process only can do superadmin
     Route::delete('user/delete/{id}',[UserController::class,'userDelete'])->name('user.delete');
-
     // payment
     Route::resource('payment',paymentController::class);
 });

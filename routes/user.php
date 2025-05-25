@@ -3,11 +3,13 @@
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\paymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RatingController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\UserController;
+use App\Models\Payment;
 
 Route::prefix('client')->middleware('user')->group(function () {
     Route::get('client',[UserController::class,'clientUi'])->name('client');
@@ -24,4 +26,8 @@ Route::prefix('client')->middleware('user')->group(function () {
     Route::get('cart',[CartController::class,'cart'])->name('cart.index');
     Route::post('cart',[CartController::class,'addToCart'])->name('cart.addToCart');
     Route::get('delete',[CartController::class,'cartDelete'])->name('cart.delete');
+
+    //payment
+    Route::get('cart/payment',[CartController::class,'payment'])->name('cart.payment');
+    Route::get('tempstorage',[CartController::class,'tempStorage'])->name('cart.tempstorage');
 });

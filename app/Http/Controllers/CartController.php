@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class CartController extends Controller
@@ -34,4 +35,33 @@ class CartController extends Controller
         Cart::whereId($cart_id)->delete();
         return response()->json(['status' => "success",'message' => "Cart Delete Success"],200);
     }
+
+    // payment page
+    public function payment(){
+        logger(Session::get('temp'));
+        return view('Client.Template.Payment.index');
+    }
+
+    //tempo storage cart data
+    public function tempStorage(Request $request){
+        $orderTemp = [];
+        foreach ($request->all() as $item) {
+            array_push($orderTemp,[
+                'user_id' => $item['user_id'],
+                'product_id' => $item['product_id'],
+                'count' => $item['count'],
+                'status' => $item['status'],
+                'order_code' => $item['order_code'],
+            ]);
+        }
+
+        Session::put('temp',$orderTemp);
+
+        return response()->json([
+            'status' => 'success',
+            'msg' => 'temp storage success'
+        ],200);
+    }
+
+
 }
