@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -38,8 +39,23 @@ class CartController extends Controller
 
     // payment page
     public function payment(){
-        logger(Session::get('temp'));
-        return view('Client.Template.Payment.index');
+        $methods = Payment::payment_methods();
+        $orderCode = Session::get('temp');
+        // dd($orderCode);
+        return  view('Client.Template.Payment.index',compact('methods','orderCode'));
+    }
+
+    //payment methods info
+    public function getPaymentInfo(Request $request){
+        $account = Payment::where('payment_methods',$request->payment_method)->first();
+
+        if ($account) {
+            return response()->json([
+            'name' => $account->account_name,
+            'number' => $account->account_number,
+            ]);
+        }
+        return response()->json(['name' => 'No Account Name','number' => 'No Account Number']);
     }
 
     //tempo storage cart data
@@ -52,6 +68,7 @@ class CartController extends Controller
                 'count' => $item['count'],
                 'status' => $item['status'],
                 'order_code' => $item['order_code'],
+                'totalAmt' => $item['totalAmt']
             ]);
         }
 

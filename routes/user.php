@@ -3,6 +3,7 @@
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\paymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -30,4 +31,9 @@ Route::prefix('client')->middleware('user')->group(function () {
     //payment
     Route::get('cart/payment',[CartController::class,'payment'])->name('cart.payment');
     Route::get('tempstorage',[CartController::class,'tempStorage'])->name('cart.tempstorage');
+    Route::post('/get-payment-info', [CartController::class, 'getPaymentInfo']);
+
+    //order
+    Route::post('order',[OrderController::class, 'order'])->name('order.store');
+
 });

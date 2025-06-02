@@ -11,11 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('payments', function (Blueprint $table) {
+        Schema::create('payment__histories', function (Blueprint $table) {
             $table->id();
-            $table->string('account_name');
-            $table->string('account_number');
-            $table->enum('payment_methods',['Card','KBZ-Pay','CB-Pay','Wave Money','True Money','AYA-Pay','Other']);
+            $table->string('user_name');
+            $table->string('phone');
+            $table->longText('address');
+            $table->string('pay_slip');
+            $table->string('payment_method');
+            $table->string('order_code');
+            $table->string('total_amount');
             $table->timestamps();
         });
     }
@@ -25,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('payments');
+        Schema::dropIfExists('payment__histories');
     }
 };

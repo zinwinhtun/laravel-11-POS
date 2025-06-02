@@ -16,6 +16,7 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @if (count($cartData))
                         @foreach ($cartData as $item)
                             <tr>
                                 <th scope="row">
@@ -61,6 +62,11 @@
                             </tr>
                         @endforeach
 
+                        @else
+                             <h2 class="text-uppercase text-muted text-center mb-5">There is no cart </h2>
+                        @endif
+
+
                     </tbody>
                 </table>
             </div>
@@ -86,11 +92,13 @@
                         </div>
                         <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
                             <h5 class="mb-0 ps-4 me-4">Total</h5>
-                            <p class="mb-0 pe-4">{{$total + 1000}} MMK</p>
+                            <p class="mb-0 pe-4" id="finalTotal">{{$total + 1000}} MMK</p>
                         </div>
                         <input type="hidden" id="userId" value="{{Auth::user()->id}}">
                         <button id="btn-process" class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4"
-                            type="button">Proceed Checkout</button>
+                            type="button" @if (count($cartData) == 0)
+                            disabled
+                            @endif>Proceed Checkout</button>
                     </div>
                 </div>
             </div>
@@ -154,14 +162,16 @@
 
                 $('#cartTable tbody tr').each(function(index , row){
                     productId = $(row).find('.productId').val();
-                qty = $(row).find('.qty').val();
+                    qty = $(row).find('.qty').val();
+                    totalAmt = $('#finalTotal').text().replace('MMK',"");
 
                     orderList.push({
                         'product_id' : productId,
                         'user_id' : userId,
                         'count' : qty,
                         'status' : 0,
-                        'order_code' : orderCode
+                        'order_code' : orderCode,
+                        'totalAmt' : totalAmt
                     })
                 })
 
