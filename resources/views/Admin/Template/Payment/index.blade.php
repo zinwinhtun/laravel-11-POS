@@ -83,10 +83,6 @@
         </div>
     </div>
     <div class="row mt-5">
-        {{-- {{dd($payments->toArray())}} --}}
-        {{-- "account_name" => "U Zin Win Htun"
-        "account_number" => "09977166520"
-        "payment_methods" => "True Money" --}}
         <div class="col ">
             <div class="card">
                 <div class="card-body">

@@ -29,10 +29,11 @@ class ProfileController extends Controller
     //password page
     public function passwordChange(){
         $user = Auth::user();
+        $image = $this->getImage();
         if(Auth::user()->role == 'user'){
-            return view('Client.Template.Profile.psw',compact('user'));
+            return view('Client.Template.Profile.psw',compact('user','image'));
         }
-        return view('Admin.Template.Profile.changePsw',compact('user'));
+        return view('Admin.Template.Profile.changePsw',compact('user','image'));
     }
 
     //change password

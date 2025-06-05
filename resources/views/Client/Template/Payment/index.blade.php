@@ -118,9 +118,6 @@
                 data: dataMethod,
                 dataType : "json",
                 success: function (response) {
-
-                    console.log(response.name,response.number);
-
                     $('.accountName').text(response.name);
                     $('.accountNumber').text(response.number);
                 },

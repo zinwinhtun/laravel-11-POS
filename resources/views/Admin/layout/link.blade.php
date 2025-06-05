@@ -56,6 +56,7 @@
             reader.readAsDataURL(event.target.files[0]);
         }
     </script>
+    @yield('script')
 </body>
 
 </html>

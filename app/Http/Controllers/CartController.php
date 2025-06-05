@@ -15,19 +15,19 @@ class CartController extends Controller
     public function cart(){
         $cartData = Cart::with('user:id','product:id,name,price,image')->where('user_id',Auth::user()->id)->get();
         //get total price at choose procuct
-        $total = 0;
-        foreach($cartData as $item){
-            $total += $item->product->price * $item->qty;
-        }
+        // $priceTotal = 0;
+        // foreach($cartData as $item){
+        //     $priceTotal += $item->product->price * $item->qty;
+        // }
 
-        return view('Client.Template.Cart.index',compact('cartData','total'));
+        return view('Client.Template.Cart.index',compact('cartData'));
     }
 
     //add to cart
     public function addToCart(Request $request){
         Cart::create($request->all());
         Alert::success('Add To Cart','Add Product to Cart Successfully');
-        return to_route('client');
+        return to_route('cart.index');
     }
 
     //delete cart

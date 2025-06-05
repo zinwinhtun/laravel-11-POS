@@ -39,6 +39,12 @@ class UserController extends Controller
         return view('Client.Layout.master',compact('products','categories','cart'));
     }
 
+    //product menu
+    public function menu(){
+        $products = Product::with('category')->latest()->get();
+        return view('Client.Template.Product.index',compact('products'));
+    }
+
     //product detail
     public function productDetail($id){
         $user = User::get();

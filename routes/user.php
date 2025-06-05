@@ -13,7 +13,9 @@ use App\Http\Controllers\User\UserController;
 use App\Models\Payment;
 
 Route::prefix('client')->middleware('user')->group(function () {
+
     Route::get('client',[UserController::class,'clientUi'])->name('client');
+    Route::get('menu',[UserController::class,'menu'])->name('product.menu');
     Route::get('product-detail/{id}',[UserController::class,'productDetail'])->name('product.detail');
     //comment
     Route::post('comment',[CommentController::class,'commentCreate'])->name('comment.save');
@@ -35,5 +37,6 @@ Route::prefix('client')->middleware('user')->group(function () {
 
     //order
     Route::post('order',[OrderController::class, 'order'])->name('order.store');
+    Route::get('history',[OrderController::class,'history'])->name('order.history');
 
 });

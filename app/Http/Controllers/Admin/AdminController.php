@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
+use App\Models\Payment;
 use Illuminate\Http\Request;
+use App\Models\Payment_History;
 use App\Http\Controllers\Controller;
+use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redis;
@@ -14,13 +17,18 @@ class AdminController extends Controller
 {
     //admin index page
     public function adminDashboard(){
-        return view('Admin.home.dashboard');
+        $totalSale = Payment_History::sum('total_amount');
+        $user = User::where('role','user')->count('id');
+        $admin = User::whereIn('role',['superadmin','admin'])->count('id');
+        $order = Order::count('id');
+        return view('Admin.home.dashboard',compact('totalSale','user','admin','order'));
     }
 
     // admin account create
     public function adminCreate(){
         $user = Auth::user();
-        return view('Admin.Template.Profile.admin-create',compact('user'));
+        $image = $this->getImage();
+        return view('Admin.Template.Profile.admin-create',compact('user','image'));
     }
 
     //admin account store

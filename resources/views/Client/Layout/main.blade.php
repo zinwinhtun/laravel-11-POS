@@ -55,7 +55,7 @@
         </div>
         <div class="container px-0">
             <nav class="navbar navbar-light bg-white navbar-expand-xl">
-                <a href="index.html" class="navbar-brand">
+                <a href="{{ route('client') }}" class="navbar-brand">
                     <h1 class="text-primary display-6">Fruitables</h1>
                 </a>
                 <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse"
@@ -65,16 +65,14 @@
                 <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                     <div class="navbar-nav mx-auto">
                         <a href="{{ route('client') }}" class="nav-item nav-link">Home</a>
+                        <a href="{{ route('product.menu') }}" class="nav-item nav-link">MENU</a>
                         <a href="{{route('cart.index')}}" class="nav-item nav-link ">Cart</a>
-                        <a href="#" class="nav-item nav-link">Order History</a>
+                        <a href="{{route('order.history')}}" class="nav-item nav-link">Order History</a>
                         <a href="{{route('contact.index')}}" class="nav-item nav-link">Contact</a>
                     </div>
                     <div class="d-flex m-3 me-0">
                         <a href="{{route('cart.index')}}" class="position-relative me-4 my-auto">
                             <i class="fa fa-shopping-bag fa-2x"></i>
-                            <span
-                                class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1"
-                                style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
                         </a>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle my-auto" data-bs-toggle="dropdown"><i

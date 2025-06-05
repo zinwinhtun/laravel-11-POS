@@ -203,18 +203,19 @@
                                         User List
                                     </a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="pages/samples/lock-screen.html">
-                                        Lockscreen
-                                    </a>
-                                </li>
                             </ul>
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="documentation/documentation.html">
+                        <a class="nav-link" href="{{route('order.list')}}">
+                    <i class="mdi mdi-format-list-bulleted-type menu-icon"></i>
+                            <span class="menu-title">Order List</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('order.confirm')}}">
                             <i class="mdi mdi-file-document-box-outline menu-icon"></i>
-                            <span class="menu-title">Documentation</span>
+                            <span class="menu-title">Sale History</span>
                         </a>
                     </li>
                 </ul>

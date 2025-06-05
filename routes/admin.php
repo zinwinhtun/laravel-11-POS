@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\paymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -18,6 +19,14 @@ Route::prefix('admin')->middleware('admin')->group(function () {
     //user management in admin panel
     Route::get('user/list',[UserController::class,'userList'])->name('user.list');
     Route::get('user/view/{id}',[UserController::class,'userView'])->name('user.view');
+
+    //order list
+    Route::get('order',[OrderController::class,'AdminOrderList'])->name('order.list');
+    Route::get('order\detail\{order_code}',[OrderController::class,'AdminOrderDetail'])->name('order.detail');
+    Route::get('status',[OrderController::class,'statusChange']);
+    Route::get('reject',[OrderController::class,'OrderReject']);
+    Route::get('accept',[OrderController::class,'OrderAccept']);
+    Route::get('sale/history',[OrderController::class,'ConfirmSale'])->name('order.confirm');
 
 });
 

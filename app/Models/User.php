@@ -51,7 +51,7 @@ class User extends Authenticatable
 
     // DB relationship
     /**
-     * Get all of the comments/carts for the User
+     * Get all of the comments/carts/orders for the User
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -63,5 +63,10 @@ class User extends Authenticatable
     public function carts(): HasMany
     {
         return $this->hasMany(Cart::class);
+    }
+
+    public function order(): HasMany
+    {
+        return $this->hasMany(Order::class);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Cart;
+use App\Models\Order;
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -23,6 +24,7 @@ class Product extends Model
         return $this->belongsTo(Category::class);
     }
 
+
     /**
      * Get all of the comments/carts for the Product
      *
@@ -36,5 +38,10 @@ class Product extends Model
     public function carts(): HasMany
     {
         return $this->hasMany(Cart::class);
+    }
+
+    public function order(): HasMany
+    {
+        return $this->hasMany(Order::class);
     }
 }
